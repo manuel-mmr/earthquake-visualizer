@@ -1,133 +1,90 @@
 <template>
-  <div class="container">
-    <h1>Earthquakes Visualizer</h1>
-    <!-- DATEPICKER -->
-    <div class="datepicker-container">
-      <b-form-datepicker
-        class="datepicker-from"
-        :max="dateTo"
-        placeholder="From"
-        id="datepicker-from"
-        v-model="dateFrom"
-      ></b-form-datepicker>
+  <div class="app-container">
+    <DateSelector
+      :dateFrom="dateFrom"
+      :dateTo="dateTo"
+      @date-selection="updateDate"
+    />
 
-      <b-form-datepicker
-        class="datepicker-to"
-        :min="dateFrom"
-        placeholder="To"
-        id="datepicker-to"
-        v-model="dateTo"
-      ></b-form-datepicker>
+    <Spinner v-if="$store.state.loading" />
 
-    </div>
-
-    <!-- MAP -->
-    <div class="map-container">
-      <MglMap
-        :mapStyle="mapStyle"
-        :center="coordinates"
-      >
-        <MglMarker
-          v-for="earthquakes in earthquakesData" :key="earthquakes.id"
-          :coordinates="earthquakes.coordinates">
-          <MglPopup>
-            <div>
-              <div class="popup-text-container">
-                <div>Id: {{earthquakes.id}}</div>
-                <div>Location: {{earthquakes.location}}</div>
-              </div>
-              <b-button variant="outline-primary" v-on:click="goToDetailScreen">See details</b-button>
-            </div>
-          </MglPopup>
-        </MglMarker>
-      </MglMap>
-    </div>
+    <Map v-else>
+      <template v-slot="earthquake">
+        <div class="popup-id">{{ earthquake.id }}</div>
+        <div class="popup-location">Location: {{ earthquake.location }}</div>
+        <div class="button-container">
+          <b-button
+            variant="outline-primary"
+            @click="goToDetailScreen(earthquake.id)"
+          >
+            See details
+          </b-button>
+        </div>
+      </template>
+    </Map>
   </div>
 </template>
-
 <script>
-// // @ is an alias to /src
-import earthquakeApi from "@/gateways/earthquakeApi";
-import { MglMap, MglPopup, MglMarker } from "vue-mapbox";
+import DateSelector from "@/components/DateSelector.vue";
+import Map from "@/components/Map.vue";
+import Spinner from "@/components/Spinner.vue";
+
+const DETAIL_ROUTE = "/detail/";
+
+const DEFAULT_DATE = {
+  FROM: "2017-10-01",
+  TO: "2017-10-02"
+};
 
 export default {
   components: {
-    MglMap,
-    MglPopup,
-    MglMarker
+    DateSelector,
+    Map,
+    Spinner
   },
   name: "Home",
   data() {
     return {
-      earthquakesData: [],
-      dateFrom: "",
-      dateTo: "",
-      mapStyle: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
-      coordinates: [-3.74922, 40.463667],
+      dateFrom: DEFAULT_DATE.FROM,
+      dateTo: DEFAULT_DATE.TO,
+      loading: this.$store.state.loading
     };
   },
-  methods: {
-    goToDetailScreen: function() {
-      // TODO: Implement logic
-    }
-  },
-  mounted() {
-    earthquakeApi.get().then(response => {
-      const {features} = response.data;
-      features.forEach(element => {
-        this.earthquakesData.push({
-          id: element.id,
-          location: element.properties.place,
-          coordinates: [element.geometry.coordinates[0], element.geometry.coordinates[1]]
-        });
-      });
+  created() {
+    this.$store.dispatch("getEarthquakesData", {
+      dateFrom: this.dateFrom,
+      dateTo: this.dateTo
     });
+  },
+  methods: {
+    goToDetailScreen: function(id) {
+      this.$router.push(DETAIL_ROUTE + id);
+    },
+    updateDate: function(dateFrom, dateTo) {
+      this.dateFrom = dateFrom;
+      this.dateTo = dateTo;
+      this.$store.dispatch("getEarthquakesData", { dateFrom, dateTo });
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
-.container {
-  display: flex;
-  flex-flow: column;
-  padding: 20px;
-  height: 100%;
-}
-
-.datepicker-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.datepicker-to {
-  margin-top: 20px;
-}
-
-.map-container {
-  height: 100%;
-  margin-top: 20px;
-  min-height: 350px;
-  position: relative;
-}
-
-.popup-text-container {
+.popup-location {
   font-size: 14px;
   font-weight: 400;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   text-align: left;
 }
 
-@media only screen and (min-width: 576px) {
-  .datepicker-container {
-    flex-direction: row;
-  }
+.popup-id {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  text-align: center;
+}
 
-  .datepicker-to {
-    margin-top: 0;
-  }
-
-  .datepicker-from {
-    margin-right: 20px;
-  }
+.button-container {
+  text-align: center;
 }
 </style>

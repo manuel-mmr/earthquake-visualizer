@@ -1,6 +1,16 @@
 import axios from "axios";
 
-export default axios.create({
-  baseURL: "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2017-10-01&endtime=2017-10-02",
-  timeout: 5000
-});
+export default {
+  getEarthquakes(dateFrom, dateTo) {
+    return axios.create({
+      baseURL: `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${dateFrom}&endtime=${dateTo}`,
+      timeout: 5000
+    });
+  },
+  getEarthquakeDetails(id) {
+    return axios.create({
+      baseURL: `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventid=${id}`,
+      timeout: 5000
+    });
+  }
+};

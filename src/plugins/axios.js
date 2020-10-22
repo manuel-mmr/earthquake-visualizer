@@ -3,23 +3,14 @@
 import Vue from "vue";
 import axios from "axios";
 
-// Full config:  https://github.com/axios/axios#request-config
-// axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
-let config = {
-  // baseURL: process.env.baseURL || process.env.apiUrl || ""
-  // timeout: 60 * 1000, // Timeout
-  // withCredentials: true, // Check cross-site Access-Control
-};
+let config = {};
 
 const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
-  function(config) {
+  function(configIntercept) {
     // Do something before request is sent
-    return config;
+    return configIntercept;
   },
   function(error) {
     // Do something with request error
@@ -39,10 +30,10 @@ _axios.interceptors.response.use(
   }
 );
 
-Plugin.install = function(Vue) {
+Plugin.install = function(VueAxios) {
   Vue.axios = _axios;
   window.axios = _axios;
-  Object.defineProperties(Vue.prototype, {
+  Object.defineProperties(VueAxios.prototype, {
     axios: {
       get() {
         return _axios;
