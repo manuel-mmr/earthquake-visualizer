@@ -1,6 +1,5 @@
 <template>
   <div class="app">
-    <h1 class="title">Earthquakes Visualizer</h1>
     <router-view />
   </div>
 </template>
@@ -22,7 +21,6 @@ body {
   color: #2c3e50;
   display: flex;
   flex-flow: column;
-  padding: 20px;
   height: 100%;
 }
 
@@ -30,10 +28,6 @@ body {
   display: flex;
   flex-flow: column;
   height: 100%;
-}
-
-.title {
-  margin-bottom: 20px;
-  text-align: center;
+  padding: 20px;
 }
 </style>

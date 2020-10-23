@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <Header :showSearch="false" />
     <Spinner v-if="$store.state.loading" />
     <b-list-group v-else>
       <b-list-group-item>Earthquake ID: {{ id }}</b-list-group-item>
@@ -15,11 +16,13 @@
 
 <script>
 import { mapGetters } from "vuex";
+import Header from "@/components/Header.vue";
 import Spinner from "@/components/Spinner.vue";
 
 export default {
   name: "Detail",
   components: {
+    Header,
     Spinner
   },
   created() {

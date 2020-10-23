@@ -1,14 +1,15 @@
 <template>
   <div class="map-container">
-    <MglMap :mapStyle="mapStyle" :center="coordinates">
+    <MglMap :mapStyle="mapStyle" :center="center" :zoom.sync="zoom">
       <MglMarker
-        v-for="earthquakes in earthquakesData"
-        :key="earthquakes.id"
-        :coordinates="earthquakes.coordinates"
+        @click="selectMaker(element)"
+        v-for="element in data"
+        :key="element.id"
+        :coordinates="element.coordinates"
       >
         <MglPopup>
           <div>
-            <slot :id="earthquakes.id" :location="earthquakes.location"></slot>
+            <slot :id="element.id" :location="element.location"></slot>
           </div>
         </MglPopup>
       </MglMarker>
@@ -18,6 +19,12 @@
 
 <script>
 import { MglMap, MglPopup, MglMarker } from "vue-mapbox";
+
+const DEFAULT_CERNTER = {
+  LNG: -3.74922,
+  LAT: 40.463667
+};
+const ZOOM_MARKER_SELECTION = 8;
 
 export default {
   name: "Map",
@@ -30,11 +37,21 @@ export default {
     return {
       earthquakesData: [],
       mapStyle: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
-      coordinates: [-3.74922, 40.463667]
+      center: [DEFAULT_CERNTER.LNG, DEFAULT_CERNTER.LAT],
+      zoom: 0
     };
+  },
+  props: {
+    data: Array
   },
   mounted() {
     this.earthquakesData = this.$store.state.earthquakesData;
+  },
+  methods: {
+    selectMaker: function(marker) {
+      this.center = marker.coordinates;
+      this.zoom = ZOOM_MARKER_SELECTION;
+    }
   }
 };
 </script>

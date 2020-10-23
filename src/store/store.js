@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     earthquakesData: [],
     earthquakeDetail: null,
-    loading: true
+    loading: true,
+    searchValue: ""
   },
   actions: {
     getEarthquakesData({ commit }, { dateFrom, dateTo }) {
@@ -42,6 +43,9 @@ export default new Vuex.Store({
           commit("setEarthquakeDetail", response.data);
           commit("changeLoadingState", false);
         });
+    },
+    updateSearch({ commit }, { value }) {
+      commit("updateSearchValue", value);
     }
   },
   mutations: {
@@ -56,6 +60,9 @@ export default new Vuex.Store({
     },
     changeLoadingState(state, loading) {
       state.loading = loading;
+    },
+    updateSearchValue(state, value) {
+      state.searchValue = value.toLowerCase();
     }
   },
   getters: {
@@ -65,6 +72,20 @@ export default new Vuex.Store({
     getEarthquakeDate: state => state.earthquakeDetail.properties.time,
     getEarthquakeType: state => state.earthquakeDetail.properties.type,
     getEarthquakeMagnitude: state => state.earthquakeDetail.properties.mag,
-    getEarthquakeState: state => state.earthquakeDetail.properties.status
+    getEarthquakeState: state => state.earthquakeDetail.properties.status,
+    getEarthquakesData: state => {
+      if (state.searchValue.length > 0) {
+        return state.earthquakesData.filter(earthquake => {
+          if (
+            earthquake.id.indexOf(state.searchValue) != -1 ||
+            earthquake.location.toLowerCase().indexOf(state.searchValue) != -1
+          ) {
+            return true;
+          }
+        });
+      } else {
+        return state.earthquakesData;
+      }
+    }
   }
 });

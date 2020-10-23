@@ -11,6 +11,8 @@ export default {
 </script>
 <style scoped lang="scss">
 .spinner {
+  height: 100%;
   margin: auto;
+  padding-top: 50px;
 }
 </style>

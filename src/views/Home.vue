@@ -1,14 +1,14 @@
 <template>
   <div class="app-container">
+    <Header :showSearch="true" @on-search="filterEarthquakes" />
     <DateSelector
       :dateFrom="dateFrom"
       :dateTo="dateTo"
       @date-selection="updateDate"
     />
-
     <Spinner v-if="$store.state.loading" />
 
-    <Map v-else>
+    <Map v-else :data="earthquakesData">
       <template v-slot="earthquake">
         <div class="popup-id">{{ earthquake.id }}</div>
         <div class="popup-location">Location: {{ earthquake.location }}</div>
@@ -28,6 +28,7 @@
 import DateSelector from "@/components/DateSelector.vue";
 import Map from "@/components/Map.vue";
 import Spinner from "@/components/Spinner.vue";
+import Header from "@/components/Header.vue";
 
 const DETAIL_ROUTE = "/detail/";
 
@@ -40,7 +41,8 @@ export default {
   components: {
     DateSelector,
     Map,
-    Spinner
+    Spinner,
+    Header
   },
   name: "Home",
   data() {
@@ -56,6 +58,9 @@ export default {
       dateTo: this.dateTo
     });
   },
+  mounted() {
+    this.earthquakesData = this.$store.getters.getEarthquakesData;
+  },
   methods: {
     goToDetailScreen: function(id) {
       this.$router.push(DETAIL_ROUTE + id);
@@ -64,22 +69,26 @@ export default {
       this.dateFrom = dateFrom;
       this.dateTo = dateTo;
       this.$store.dispatch("getEarthquakesData", { dateFrom, dateTo });
+    },
+    filterEarthquakes: function(value) {
+      this.$store.dispatch("updateSearch", { value });
+      this.earthquakesData = this.$store.getters.getEarthquakesData;
     }
   }
 };
 </script>
 
 <style scoped lang="scss">
+@import "../scss/_variables.scss";
+
 .popup-location {
-  font-size: 14px;
-  font-weight: 400;
+  @extend %font--small;
   margin-bottom: 25px;
   text-align: left;
 }
 
 .popup-id {
-  font-size: 18px;
-  font-weight: 500;
+  @extend %font--normal;
   margin-bottom: 15px;
   text-align: center;
 }
