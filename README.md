@@ -30,4 +30,4 @@ yarn &&yarn serve
 
 ## TODO/Improvements
 - Add unit tests :)
-
+- Error screen

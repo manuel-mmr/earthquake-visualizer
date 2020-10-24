@@ -1,10 +1,16 @@
 // Colors
 $grey-color: #343a40;
 $white-color: white;
+$lightblue-color: #005cc5;
 
 // Fonts
 %font--small {
   font-size: 14px;
+  font-weight: 300;
+}
+
+%font--normal-light {
+  font-size: 18px;
   font-weight: 300;
 }
 

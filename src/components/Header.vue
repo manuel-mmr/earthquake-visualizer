@@ -1,9 +1,7 @@
 <template>
-  <div class="header">
-    <div class="header-container">
-      <h1 class="title">Earthquakes Visualizer</h1>
-      <Search v-if="showSearch" @on-search="onSearch" />
-    </div>
+  <div class="header-container">
+    <h1 class="title">Earthquakes Visualizer</h1>
+    <Search v-if="showSearch" @on-search="onSearch" />
   </div>
 </template>
 
@@ -28,10 +26,6 @@ export default {
 
 <style scoped lang="scss">
 @import "../scss/_variables.scss";
-
-.header {
-  height: 68px;
-}
 
 .header-container {
   background-color: $grey-color;

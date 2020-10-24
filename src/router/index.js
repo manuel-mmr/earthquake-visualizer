@@ -8,13 +8,19 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
+    meta: {
+      breadcrumb: [{ name: "Home" }]
+    }
   },
   {
     path: "/detail/:id",
     name: "Detail",
     component: () =>
-      import(/* webpackChunkName: "detail" */ "../views/Detail.vue")
+      import(/* webpackChunkName: "detail" */ "../views/Detail.vue"),
+    meta: {
+      breadcrumb: [{ name: "Home", link: "/" }, { name: "Detail" }]
+    }
   }
 ];
 

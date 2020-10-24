@@ -40,7 +40,6 @@ export default {
 .datepicker-container {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
 }
 
 .datepicker-to {
