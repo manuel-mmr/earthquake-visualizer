@@ -23,3 +23,12 @@ $lightblue-color: #005cc5;
   font-size: 20px;
   font-weight: 700;
 }
+
+// Viewports
+$viewport--medium: 576px;
+
+@mixin viewport--medium {
+  @media (max-width: $viewport--medium) {
+    @content;
+  }
+}

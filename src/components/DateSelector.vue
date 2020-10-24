@@ -37,26 +37,32 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../scss/_variables.scss";
+
 .datepicker-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .datepicker-to {
-  margin-top: 20px;
+  margin-top: 0;
 }
 
-@media only screen and (min-width: 576px) {
+.datepicker-from {
+  margin-right: 20px;
+}
+
+@include viewport--medium {
   .datepicker-container {
-    flex-direction: row;
+    flex-direction: column;
   }
 
   .datepicker-to {
-    margin-top: 0;
+    margin-top: 20px;
   }
 
   .datepicker-from {
-    margin-right: 20px;
+    margin-right: 0;
   }
 }
 </style>
