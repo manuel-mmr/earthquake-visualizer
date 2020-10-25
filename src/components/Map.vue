@@ -35,7 +35,6 @@ export default {
   },
   data() {
     return {
-      earthquakesData: [],
       mapStyle: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
       center: [DEFAULT_CERNTER.LNG, DEFAULT_CERNTER.LAT],
       zoom: 0
@@ -43,9 +42,6 @@ export default {
   },
   props: {
     data: Array
-  },
-  mounted() {
-    this.earthquakesData = this.$store.state.earthquakesData;
   },
   methods: {
     selectMaker: function(marker) {

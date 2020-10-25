@@ -49,7 +49,8 @@ export default {
     return {
       dateFrom: DEFAULT_DATE.FROM,
       dateTo: DEFAULT_DATE.TO,
-      loading: this.$store.state.loading
+      loading: this.$store.state.loading,
+      earthquakesData: []
     };
   },
   created() {
