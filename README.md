@@ -6,7 +6,7 @@ Before we get started, you have to make sure you have installed [yarn](https://y
 the following command:
 
 ```
-yarn &&yarn serve
+yarn && yarn serve
 ```
 
 ## Architecture
