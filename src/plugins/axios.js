@@ -1,0 +1,52 @@
+"use strict";
+
+import Vue from "vue";
+import axios from "axios";
+
+let config = {};
+
+const _axios = axios.create(config);
+
+_axios.interceptors.request.use(
+  function(configIntercept) {
+    // Do something before request is sent
+    return configIntercept;
+  },
+  function(error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
+
+// Add a response interceptor
+_axios.interceptors.response.use(
+  function(response) {
+    // Do something with response data
+    return response;
+  },
+  function(error) {
+    // Do something with response error
+    return Promise.reject(error);
+  }
+);
+
+Plugin.install = function(VueAxios) {
+  Vue.axios = _axios;
+  window.axios = _axios;
+  Object.defineProperties(VueAxios.prototype, {
+    axios: {
+      get() {
+        return _axios;
+      }
+    },
+    $axios: {
+      get() {
+        return _axios;
+      }
+    }
+  });
+};
+
+Vue.use(Plugin);
+
+export default Plugin;

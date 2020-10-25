@@ -1,0 +1,39 @@
+// Colors
+$grey-color: #343a40;
+$white-color: white;
+$lightblue-color: #005cc5;
+
+// Fonts
+%font--small {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+%font--normal-light {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+%font--normal {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+%font--large {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+%font--extra-large {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+// Viewports
+$viewport--medium: 576px;
+
+@mixin viewport--medium {
+  @media (max-width: $viewport--medium) {
+    @content;
+  }
+}
