@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     goToDetailScreen: function(id) {
+      this.$store.dispatch("resetSearch");
       this.$router.push(DETAIL_ROUTE + id);
     },
     updateDate: function(dateFrom, dateTo) {

@@ -55,6 +55,9 @@ export default new Vuex.Store({
     },
     updateSearch({ commit }, { value }) {
       commit("updateSearchValue", value);
+    },
+    resetSearch({ commit }) {
+      commit("updateSearchValue", "");
     }
   },
   mutations: {
