@@ -8,9 +8,9 @@
       <b-list-group-item>Location: {{ location }}</b-list-group-item>
       <b-list-group-item>Title: {{ title }}</b-list-group-item>
       <b-list-group-item>Date: {{ date }}</b-list-group-item>
-      <b-list-group-item>Type: {{ type }}</b-list-group-item>
+      <b-list-group-item>Type: {{ type | capitalize }}</b-list-group-item>
       <b-list-group-item>Magnitude: {{ magnitude }}</b-list-group-item>
-      <b-list-group-item>State: {{ state }}</b-list-group-item>
+      <b-list-group-item>State: {{ state | capitalize }}</b-list-group-item>
     </b-list-group>
   </div>
 </template>

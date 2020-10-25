@@ -87,7 +87,12 @@ export default new Vuex.Store({
         return state.earthquakesData.filter(earthquake => {
           if (
             earthquake.id.indexOf(state.searchValue) != -1 ||
-            earthquake.location.toLowerCase().indexOf(state.searchValue) != -1
+            earthquake.location.toLowerCase().indexOf(state.searchValue) !=
+              -1 ||
+            earthquake.coordinates[0].toString().indexOf(state.searchValue) !=
+              -1 ||
+            earthquake.coordinates[1].toString().indexOf(state.searchValue) !=
+              -1
           ) {
             return true;
           }
