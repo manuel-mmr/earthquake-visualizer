@@ -1,8 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import earthquakeApi from "@/gateways/earthquakeApi";
+import router from "../router";
 
 Vue.use(Vuex);
+
+const ERROR_ROUTE = "/error";
 
 export default new Vuex.Store({
   state: {
@@ -32,6 +35,9 @@ export default new Vuex.Store({
             commit("setEarthquakeData", data);
             commit("changeLoadingState", false);
           });
+        })
+        .catch(() => {
+          router.push(ERROR_ROUTE);
         });
     },
     getEarthquakeDetail({ commit }, { id }) {
@@ -42,6 +48,9 @@ export default new Vuex.Store({
         .then(response => {
           commit("setEarthquakeDetail", response.data);
           commit("changeLoadingState", false);
+        })
+        .catch(() => {
+          router.push(ERROR_ROUTE);
         });
     },
     updateSearch({ commit }, { value }) {

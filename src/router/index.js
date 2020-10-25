@@ -21,6 +21,15 @@ const routes = [
     meta: {
       breadcrumb: [{ name: "Home", link: "/" }, { name: "Detail" }]
     }
+  },
+  {
+    path: "/error",
+    name: "Error",
+    component: () =>
+      import(/* webpackChunkName: "error */ "../views/Error.vue"),
+    meta: {
+      breadcrumb: [{ name: "Home", link: "/" }]
+    }
   }
 ];
 

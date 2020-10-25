@@ -29,5 +29,7 @@ yarn &&yarn serve
 
 
 ## TODO/Improvements
-- Add unit tests :)
-- Error screen
+- Add unit tests
+- Improve error handleling
+- Improve map performance (e.g: limiting number of markers, limiting zoom and show markers only inside of that zoom)
+- Use typescript to handle types

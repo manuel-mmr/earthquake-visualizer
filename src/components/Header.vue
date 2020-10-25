@@ -1,12 +1,14 @@
 <template>
   <div class="header-container">
-    <h1 class="title">Earthquakes Visualizer</h1>
+    <h1 class="title" @click="goToHome()">Earthquakes Visualizer</h1>
     <Search v-if="showSearch" @on-search="onSearch" />
   </div>
 </template>
 
 <script>
 import Search from "./Search";
+
+const HOME_ROUTE = "/";
 
 export default {
   name: "Header",
@@ -19,6 +21,9 @@ export default {
   methods: {
     onSearch: function(value) {
       this.$emit("on-search", value);
+    },
+    goToHome: function() {
+      if (this.$route.path != HOME_ROUTE) this.$router.push(HOME_ROUTE);
     }
   }
 };
@@ -42,6 +47,7 @@ export default {
 
 .title {
   @extend %font--large;
+  cursor: pointer;
   flex: 1;
   margin: auto;
 }
