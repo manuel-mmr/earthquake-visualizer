@@ -34,6 +34,7 @@ yarn && yarn serve
 - Improve map performance (e.g: limiting number of markers, limiting zoom and show markers only inside of that zoom)
 - Use typescript to handle types
 - Save data when going back
+- Use functional components
 
 ## Demo
 A demo can be found by clickling on the following URL: https://manuel-mmr.github.io/earthquake-visualizer/#/
